@@ -15,6 +15,15 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo ,World"
+
+  print_ENV:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run:
+          name : "print ENV"
+          command : |
+                    echo $MY_ENV_VAR
           
 workflows:
   say-hello-workflow:
@@ -23,3 +32,4 @@ workflows:
       - print_world:
           requires:
             - print-hello
+      - print_ENV
