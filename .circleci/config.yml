@@ -1,25 +1,28 @@
 version: 2.1
 jobs:
-  print-hello:
+  save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - run:
-          name: "Say hello"
-          command: "echo Hello"
+          command: "echo Hello World >> output.txt"
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          command: "echo Hello World >> output.txt"
 
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run:
-          name: "Say hello"
-          command: "echo ,World"
-          
 workflows:
   say-hello-workflow:
     jobs:
-      - print-hello
-      - print_world:
+      - save_hello_world_output
+      - attach_workspace:
           requires:
-            - print-hello
+            - "save_hello_world_output"
