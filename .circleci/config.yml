@@ -37,7 +37,7 @@ jobs:
     steps:
       - run: 
           name: "non-zero failure"
-          command: return 1
+          command: /bin/bash return 1
       - run:
           name: "send to log"
           command: echo "test fails due to non-zero return value"
