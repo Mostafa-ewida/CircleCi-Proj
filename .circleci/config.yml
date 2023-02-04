@@ -17,7 +17,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          command: "echo Hello World >> output.txt"
+          command: "cat ~/output.txt"
 
 workflows:
   say-hello-workflow:
