@@ -31,6 +31,18 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id
+  when_fail_job: 
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: 
+          name: "non-zero failure"
+          command: return 1
+      - run:
+          name: "send to log"
+          command: echo "test fails due to non-zero return value"
+          when: on_fail
+
 workflows:
   say-hello-workflow:
     jobs:
@@ -39,3 +51,4 @@ workflows:
           requires:
             - "save_hello_world_output"
       - print_workflow_ID_job
+      - when_fail_job
